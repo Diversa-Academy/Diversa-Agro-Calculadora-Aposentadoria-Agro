@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Calculadora Estratégica | Diversa</title>
 
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Diversa-Academy/Images/725ca77b2774b887536795f5495ca14a2956b852/Diversa%20Agro%20Icon.png">
+
+<!-- MICROSOFT CLARITY -->
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "wnj2jjrm95");
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -47,7 +59,7 @@
   .animated-bg {
     position: fixed;
     top: 0; left: 0; width: 100vw; height: 100vh;
-    z-index: -1;
+    z-index: -3;
     background-image: 
       linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
       linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
@@ -58,7 +70,7 @@
   .bg-glow {
     position: fixed; top: -20%; right: -10%; width: 70vw; height: 70vh;
     background: radial-gradient(circle, var(--brand-green-glow) 0%, transparent 60%);
-    filter: blur(80px); opacity: 0.5; z-index: -1; animation: pulseGlow 8s ease-in-out infinite alternate;
+    filter: blur(80px); opacity: 0.5; z-index: -3; animation: pulseGlow 8s ease-in-out infinite alternate;
   }
 
   @keyframes gridMove { 0% { background-position: 0 0; } 100% { background-position: 0 60px; } }
@@ -74,24 +86,93 @@
     gap: 60px;
   }
 
-  .sidebar-hero { flex: 1; max-width: 450px; display: flex; flex-direction: column; justify-content: center; position: sticky; top: 40px; height: calc(100vh - 80px); }
-  .main-content { flex: 1.5; display: flex; flex-direction: column; justify-content: center; }
+  .sidebar-hero { 
+    flex: 1; 
+    max-width: 450px; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    position: sticky; 
+    top: 40px; 
+    height: calc(100vh - 80px); 
+    z-index: 1; 
+  }
 
+  /* --- IMAGEM DE HEADER/VERTICAL (SPLIT SCREEN EFFECT) --- */
+  .sidebar-hero::before {
+    content: '';
+    position: absolute;
+    top: -40px;
+    bottom: -40px;
+    left: -50vw;
+    right: -150px; 
+    background: url('https://raw.githubusercontent.com/Diversa-Academy/Images/1c06d22145590e3304ebc1fb33c998c4762faca3/maxresdefault-9.webp') center/cover no-repeat;
+    z-index: -2;
+    -webkit-mask-image: linear-gradient(to right, black 65%, transparent 100%);
+    mask-image: linear-gradient(to right, black 65%, transparent 100%);
+  }
+
+  /* Película escura sobre a imagem para dar leitura ao texto */
+  .sidebar-hero::after {
+    content: '';
+    position: absolute;
+    top: -40px;
+    bottom: -40px;
+    left: -50vw;
+    right: -150px; 
+    background: linear-gradient(to right, rgba(3,9,20,0.3) 0%, rgba(3,9,20,0.85) 75%, var(--bg-dark) 100%);
+    z-index: -1;
+  }
+
+  .main-content { 
+    flex: 1.5; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    z-index: 2; 
+  }
+
+  /* --- AJUSTES MOBILE --- */
   @media (max-width: 992px) {
     .layout-wrapper { flex-direction: column; height: auto; gap: 40px; }
-    .sidebar-hero { position: relative; height: auto; top: 0; max-width: 100%; text-align: center; }
+    /* Ajustado para alinhar à esquerda no mobile também */
+    .sidebar-hero { position: relative; height: auto; top: 0; max-width: 100%; text-align: left; }
+    
+    .sidebar-hero::before, .sidebar-hero::after {
+      left: -20px;
+      right: -20px;
+      top: -40px;
+      bottom: -40px;
+    }
+    .sidebar-hero::before {
+      -webkit-mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+      mask-image: linear-gradient(to bottom, black 60%, transparent 100%);
+    }
+    .sidebar-hero::after {
+      background: linear-gradient(to bottom, rgba(3,9,20,0.3) 0%, rgba(3,9,20,0.9) 75%, var(--bg-dark) 100%);
+    }
+
+    /* Mantém a logo na esquerda e um pouco menor no mobile */
+    .brand-logo { margin: 0 auto 24px 0; max-height: 75px; display: block; }
+    
+    .hero-subtitle { margin: 0; }
+    .hero-title { font-size: clamp(1.8rem, 7vw, 2.5rem); }
+    .hero-subtitle { font-size: 14px; }
   }
 
   /* --- BRAND & TYPOGRAPHY --- */
-  .brand-tag {
-    display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-heading); font-size: 13px; font-weight: 800; letter-spacing: 0.2em; text-transform: uppercase; color: var(--brand-green); margin-bottom: 24px; padding: 8px 16px; background: rgba(16,185,129,0.1); border-radius: 30px; border: 1px solid rgba(16,185,129,0.2); width: fit-content;
+  /* Logo maior e alinhada à esquerda na margem */
+  .brand-logo { 
+    max-height: 90px; 
+    width: auto; 
+    margin: 0 auto 32px 0; 
+    display: block; 
+    object-fit: contain; 
   }
-  @media (max-width: 992px) { .brand-tag { margin: 0 auto 24px auto; } }
-
+  
   .hero-title { font-family: var(--font-heading); font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 20px; letter-spacing: -0.02em; }
   .hero-title span { background: linear-gradient(135deg, #fff 0%, #a5b4fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
   .hero-subtitle { font-size: 17px; color: var(--text-muted); line-height: 1.7; max-width: 90%; }
-  @media (max-width: 992px) { .hero-subtitle { margin: 0 auto; } }
 
   /* --- PROGRESS INDICATOR --- */
   .progress-tracker { display: flex; gap: 10px; margin-bottom: 40px; }
@@ -237,12 +318,12 @@
 <div class="layout-wrapper">
   
   <div class="sidebar-hero">
-    <div class="brand-tag">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
-      Diversa Institucional
-    </div>
+    
+    <!-- Imagem da Logo Maior e Alinhada à Esquerda -->
+    <img src="https://raw.githubusercontent.com/Diversa-Academy/Images/725ca77b2774b887536795f5495ca14a2956b852/Diversa%20Agro%20Logo.png" alt="Diversa Agro Logo" class="brand-logo">
+    
     <h1 class="hero-title">O cálculo exato do seu <span>Futuro Agro</span></h1>
-    <p class="hero-subtitle">Projete o volume de produção necessário para consolidar sua independência financeira, integrando dados reais da sua operação com as cotações institucionais de mercado.</p>
+    <p class="hero-subtitle">Projete o volume de produção da sua operação para alcançar sua aposentadoria, ou independência financeira, quando decidir que é hora de descansar, integrando dados reais da fazenda com as cotações do mercado (base Cepea).</p>
   </div>
 
   <div class="main-content">
@@ -257,8 +338,8 @@
       
       <div class="step-container active" id="step1">
         <div class="step-header">
-          <h2 class="step-title">Matriz Produtiva</h2>
-          <p class="step-desc">Selecione sua cultura principal e insira suas premissas operacionais atuais.</p>
+          <h2 class="step-title">Como é a sua operação?</h2>
+          <p class="step-desc">Selecione uma das commodities produzidas e inclua dados básicos para o cálculo.</p>
         </div>
 
         <div class="commodity-selector">
@@ -280,11 +361,11 @@
               <div class="input-wrapper"><input type="number" id="boi-arrobas" value="20"></div>
             </div>
             <div class="input-group">
-              <label>Volume/Ano</label>
+              <label>Abate anual</label>
               <div class="input-wrapper"><input type="number" id="boi-animais-ano" value="200"></div>
             </div>
             <div class="input-group">
-              <label>Custo Total/@</label>
+              <label>Custo por arroba</label>
               <div class="input-wrapper"><input type="number" id="boi-custo-arroba" value="180"></div>
             </div>
           </div>
@@ -299,9 +380,9 @@
 
         <div class="dyn-fields" id="fields-soja">
           <div class="grid-3">
-            <div class="input-group"><label>Área (ha)</label><div class="input-wrapper"><input type="number" id="soja-area" value="500"></div></div>
-            <div class="input-group"><label>Produtividade (sc)</label><div class="input-wrapper"><input type="number" id="soja-produtividade" value="65"></div></div>
-            <div class="input-group"><label>Custo (R$/sc)</label><div class="input-wrapper"><input type="number" id="soja-custo-sc" value="85"></div></div>
+            <div class="input-group"><label>Área produzida</label><div class="input-wrapper"><input type="number" id="soja-area" value="500"></div></div>
+            <div class="input-group"><label>Produtividade (saca/ha)</label><div class="input-wrapper"><input type="number" id="soja-produtividade" value="65"></div></div>
+            <div class="input-group"><label>Custo por saca (R$/saca)</label><div class="input-wrapper"><input type="number" id="soja-custo-sc" value="85"></div></div>
           </div>
           <div class="grid-2" style="margin-top: 24px; align-items: end;">
             <div class="range-container">
@@ -314,9 +395,9 @@
 
         <div class="dyn-fields" id="fields-milho">
           <div class="grid-3">
-            <div class="input-group"><label>Área (ha)</label><div class="input-wrapper"><input type="number" id="milho-area" value="500"></div></div>
-            <div class="input-group"><label>Produtividade (sc)</label><div class="input-wrapper"><input type="number" id="milho-produtividade" value="110"></div></div>
-            <div class="input-group"><label>Custo (R$/sc)</label><div class="input-wrapper"><input type="number" id="milho-custo-sc" value="45"></div></div>
+            <div class="input-group"><label>Área produzida</label><div class="input-wrapper"><input type="number" id="milho-area" value="500"></div></div>
+            <div class="input-group"><label>Produtividade (saca/ha)</label><div class="input-wrapper"><input type="number" id="milho-produtividade" value="110"></div></div>
+            <div class="input-group"><label>Custo por saca (R$/saca)</label><div class="input-wrapper"><input type="number" id="milho-custo-sc" value="45"></div></div>
           </div>
           <div class="grid-2" style="margin-top: 24px; align-items: end;">
             <div class="range-container">
@@ -412,8 +493,8 @@
 
       <div class="bento-section">
         <div class="bento-header">
-          <h3>Evolua de Produtor para <span>Investidor Institucional</span></h3>
-          <p>Descubra como o Hedge Agrícola traz a previsibilidade dos grandes fundos para a sua fazenda.</p>
+          <h3>Além de produtor, <span>você precisa ser investidor.</span></h3>
+          <p>Descubra como a gestão de risco de preços pode garantir previsibilidade para a sua produção agrícola ou pecuária.</p>
         </div>
 
         <div class="bento-grid">
@@ -448,6 +529,9 @@
 </div>
 
 <script>
+  // COLOQUE A URL DO WEB APP GERADA NO PASSO 1 AQUI:
+  const URL_PLANILHA = "https://script.google.com/macros/s/AKfycbzW3kzPqLH0FHGic6qviQlfe3_m8YZ8LKdjbh3cC6kCkEg77Q1R986U5_A7_C8_gcI2/exec"; 
+
   // --- MASK & UTILS ---
   function maskPhone(v) {
     v = v.replace(/\D/g, ""); 
@@ -531,7 +615,6 @@
     const step = (timestamp) => {
       if (!startTimestamp) startTimestamp = timestamp;
       const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      // Easing out cubic
       const easeOut = 1 - Math.pow(1 - progress, 3);
       obj.innerHTML = fmt(Math.floor(easeOut * (end - start) + start));
       if (progress < 1) {
@@ -539,6 +622,48 @@
       }
     };
     window.requestAnimationFrame(step);
+  }
+
+  // --- GOOGLE SHEETS INTEGRATION (USANDO JSON) ---
+  function enviarDadosParaPlanilha() {
+    if(!URL_PLANILHA) return;
+
+    let dado1, dado2, dado3, dado4;
+
+    if(commodityAtual === 'boi') {
+      dado1 = document.getElementById('boi-arrobas').value + " @ (Peso)";
+      dado2 = document.getElementById('boi-animais-ano').value + " cab/ano";
+      dado3 = "R$ " + document.getElementById('boi-custo-arroba').value + " /@ (Custo)";
+      dado4 = document.getElementById('boi-reinvest').value + "% Reinvest.";
+    } else {
+      dado1 = document.getElementById(`${commodityAtual}-area`).value + " ha (Área)";
+      dado2 = document.getElementById(`${commodityAtual}-produtividade`).value + " sc/ha (Prod.)";
+      dado3 = "R$ " + document.getElementById(`${commodityAtual}-custo-sc`).value + " /sc (Custo)";
+      dado4 = document.getElementById(`${commodityAtual}-reinvest`).value + "% Reinv. | " + document.getElementById(`${commodityAtual}-safras`).value + " Safra(s)";
+    }
+
+    const payload = {
+      dataHora: new Date().toLocaleString('pt-BR'),
+      nome: document.getElementById('nome').value.trim(),
+      whatsapp: document.getElementById('whatsapp').value.trim(),
+      rendaMensal: "R$ " + document.getElementById('rendaMensal').value,
+      prazo: document.getElementById('anosSlider').value + " anos",
+      commodity: commodityAtual.toUpperCase(),
+      dado1: dado1,
+      dado2: dado2,
+      dado3: dado3,
+      dado4: dado4
+    };
+
+    fetch(URL_PLANILHA, {
+      method: "POST",
+      mode: "no-cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(payload)
+    }).then(() => console.log("Dados enviados via JSON com sucesso"))
+      .catch(err => console.error("Erro no envio:", err));
   }
 
   // --- CALCULATION LOGIC ---
@@ -552,15 +677,16 @@
   }
 
   async function iniciarCalculo() {
-    // Hide Form Controls, Show Loader
     document.querySelectorAll('.step-container').forEach(el => el.classList.remove('active'));
     document.getElementById('wizardControls').style.display = 'none';
     document.getElementById('progressTracker').style.display = 'none';
     document.getElementById('loaderState').style.display = 'flex';
 
+    // Dispara o envio do JSON silencioso
+    enviarDadosParaPlanilha();
+
     const cotacao = await simularBuscaAPI(commodityAtual);
     
-    // Math
     const rendaMensal = parseFloat(document.getElementById('rendaMensal').value);
     const anos = parseInt(document.getElementById('anosSlider').value);
     const yieldAnual = 0.08; 
@@ -595,29 +721,25 @@
     const volumeFinal = Math.ceil(volumeAlvo);
     const lucroFinal = Math.max(0, lucroAnual);
 
-    // Populate Results (before showing)
     document.getElementById('res-unidade').textContent = unidade;
     document.getElementById('res-meta-capital').textContent = fmtMoeda(capitalNecessario);
     document.getElementById('res-lucro-anual').textContent = fmtMoeda(lucroFinal);
     document.getElementById('res-margem').textContent = `R$ ${fmt(margemUnit)}`;
 
-    // Lead Generation
     const nome = document.getElementById('nome').value.split(' ')[0];
     const wpp = document.getElementById('whatsapp').value.replace(/\D/g,'');
     const msg = encodeURIComponent(`Olá! Sou ${nome}. Concluí o mapeamento estratégico da Diversa e meu alvo exige patrimônio de ${fmtMoeda(capitalNecessario)}. Quero estruturar o Hedge da minha operação para blindar minha margem.`);
     document.getElementById('cta-whatsapp').href = `https://wa.me/55${wpp}?text=${msg}`;
 
-    // Transition to Dashboard
     document.getElementById('wizardPanel').style.display = 'none';
     document.getElementById('resultPanel').style.display = 'block';
     
-    // Trigger Number Animation
     const numEl = document.getElementById('res-numero');
     animateValue(numEl, 0, volumeFinal, 2000);
   }
 
   function refazer() {
-    location.reload(); // Clean state restart for a complex app feel
+    location.reload(); 
   }
 </script>
 
